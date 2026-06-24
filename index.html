@@ -178,7 +178,7 @@
     }
 
     /* ── GLOW CARD BORDER ANIMATION ── */
-    @property --border-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+    @property --border-angle { syntax: '<angle>'; inherits: false; initial-value: 168deg; }
     .glow-border {
       position: relative;
       background: var(--card);
@@ -188,13 +188,16 @@
       content: ''; position: absolute; inset: -1px; border-radius: 19px; z-index: -1;
       background: conic-gradient(from var(--border-angle), transparent 70%, var(--accent), var(--accent2), var(--accent3), transparent);
       animation: none;
-      opacity: 0; transition: opacity 0.4s;
+      opacity: 0;
     }
     .glow-border:hover::before {
-      animation: borderSpin 1.2s ease-out forwards;
-      opacity: 0.5;
+      animation: borderSpin 1.5s ease-out forwards;
     }
-    @keyframes borderSpin { to { --border-angle: 180deg; } }
+    @keyframes borderSpin {
+      0%   { --border-angle: 168deg; opacity: 0.5; }
+      75%  { --border-angle: 318deg; opacity: 0.5; }
+      100% { --border-angle: 318deg; opacity: 0; }
+    }
 
     /* ── STAR FIELD ── */
     #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }

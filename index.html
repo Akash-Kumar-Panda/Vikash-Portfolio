@@ -36,6 +36,101 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
+    /* ── PERSPECTIVE GRID ── */
+    #grid-floor {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+      pointer-events: none; z-index: 0; opacity: 0.18;
+    }
+
+    /* ── GLITCH ── */
+    .glitch { position: relative; }
+    .glitch::before, .glitch::after {
+      content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%;
+      background: transparent; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(135deg, #6c63ff 0%, #00d4ff 50%, #ff6b9d 100%);
+    }
+    .glitch::before {
+      left: 2px; text-shadow: -1px 0 #ff6b9d;
+      animation: glitch1 3.5s infinite linear;
+      clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+    }
+    .glitch::after {
+      left: -2px; text-shadow: 1px 0 #00d4ff;
+      animation: glitch2 3.5s infinite linear;
+      clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+    }
+    @keyframes glitch1 {
+      0%,90%,100% { transform: none; opacity: 0; }
+      92% { transform: translate(-3px, 1px) skewX(-2deg); opacity: 0.7; }
+      94% { transform: translate(3px, -1px) skewX(2deg); opacity: 0.5; }
+      96% { transform: translate(-2px, 2px); opacity: 0.8; }
+      98% { transform: none; opacity: 0; }
+    }
+    @keyframes glitch2 {
+      0%,90%,100% { transform: none; opacity: 0; }
+      91% { transform: translate(3px, -2px) skewX(3deg); opacity: 0.6; }
+      93% { transform: translate(-3px, 1px) skewX(-1deg); opacity: 0.4; }
+      95% { transform: translate(2px, -1px); opacity: 0.7; }
+      97% { transform: none; opacity: 0; }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      position: relative; z-index: 1; overflow: hidden;
+      padding: 1rem 0; background: rgba(108,99,255,0.05);
+      border-top: 1px solid rgba(108,99,255,0.12);
+      border-bottom: 1px solid rgba(108,99,255,0.12);
+    }
+    .marquee-track {
+      display: flex; gap: 0; width: max-content;
+      animation: marqueeRoll 28s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      display: flex; align-items: center; gap: 0.6rem; padding: 0 2rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--text2);
+      text-transform: uppercase; letter-spacing: 1.5px; white-space: nowrap;
+    }
+    .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .marquee-item.highlight { color: var(--accent2); }
+    @keyframes marqueeRoll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── NEON SECTION TITLES ── */
+    .section-title { transition: text-shadow 0.4s; }
+    .section-title.neon {
+      text-shadow: 0 0 20px rgba(108,99,255,0.5), 0 0 40px rgba(108,99,255,0.25);
+    }
+
+    /* ── TIMELINE DRAW ── */
+    #experience .timeline::before {
+      background: none;
+      border-left: 1px solid rgba(108,99,255,0.15);
+    }
+    .timeline-line-fill {
+      position: absolute; left: 28px; top: 0; width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      height: 0; transition: height 0.8s ease; z-index: 1;
+    }
+
+    /* ── FLOATING CODE ── */
+    .code-float {
+      position: absolute; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: rgba(108,99,255,0.12);
+      pointer-events: none; white-space: nowrap; user-select: none;
+      animation: codeDrift 12s ease-in-out infinite;
+    }
+    @keyframes codeDrift {
+      0%,100% { transform: translateY(0); opacity: 0.12; }
+      50% { transform: translateY(-16px); opacity: 0.07; }
+    }
+
+    /* ── PARTICLE BURST ── */
+    .burst-particle {
+      position: fixed; width: 6px; height: 6px; border-radius: 50%;
+      pointer-events: none; z-index: 9995;
+      transform: translate(-50%,-50%);
+    }
+
     /* ── SCROLL PROGRESS ── */
     #scroll-progress {
       position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
@@ -597,6 +692,9 @@
 
   <!-- HERO -->
   <section id="hero">
+    <!-- Perspective grid floor -->
+    <canvas id="grid-floor"></canvas>
+
     <!-- Geometric shapes -->
     <div class="shape"><svg width="60" height="60" viewBox="0 0 60 60"><polygon points="30,4 56,50 4,50"/></svg></div>
     <div class="shape"><svg width="70" height="70" viewBox="0 0 70 70"><polygon points="35,5 65,27 54,62 16,62 5,27"/></svg></div>
@@ -616,7 +714,7 @@
     </div>
 
     <h1 class="hero-name">
-      <span class="line1">Vikash Panda</span>
+      <span class="line1 glitch" data-text="Vikash Panda">Vikash Panda</span>
       <span class="line2">Technical Recruiter</span>
     </h1>
 
@@ -641,6 +739,41 @@
       <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
     </div>
   </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee">
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Technical Recruiter</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>HubSpot CRM</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Talent Acquisition</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Google Workspace</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Candidate Sourcing</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>CSE Graduate</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>100+ Students</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Microsoft Teams</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>95% Success Rate</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Stakeholder Management</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Immediate Joiner</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Data Analytics</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Open to Work</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Remote Ready</span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Technical Recruiter</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>HubSpot CRM</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Talent Acquisition</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Google Workspace</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Candidate Sourcing</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>CSE Graduate</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>100+ Students</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Microsoft Teams</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>95% Success Rate</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Stakeholder Management</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Immediate Joiner</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Data Analytics</span>
+      <span class="marquee-item highlight"><span class="marquee-dot"></span>Open to Work</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Remote Ready</span>
+    </div>
+  </div>
 
   <!-- WAVE 1 -->
   <div class="wave-divider" style="background:var(--bg);margin-bottom:-2px">
@@ -694,7 +827,14 @@
       <h2 class="section-title">Experience</h2>
       <p class="section-sub">A track record built on results, people, and impact.</p>
     </div>
-    <div class="timeline">
+    <!-- Floating code snippets -->
+    <div class="code-float" style="top:12%;left:2%;animation-delay:0s">const recruit = (talent) => match(talent, role);</div>
+    <div class="code-float" style="top:35%;right:2%;animation-delay:3s">if (candidate.score >= 85) shortlist();</div>
+    <div class="code-float" style="top:60%;left:3%;animation-delay:6s">hubspot.crm.contacts.create(candidate);</div>
+    <div class="code-float" style="top:80%;right:3%;animation-delay:2s">await onboard({ tool: "Teams", team: all });</div>
+
+    <div class="timeline" style="position:relative">
+      <div class="timeline-line-fill" id="timeline-fill"></div>
 
       <div class="timeline-item">
         <div class="timeline-dot">🎯</div>
@@ -1123,6 +1263,83 @@
 
     const skillsIO = new IntersectionObserver(e => { if (e[0].isIntersecting) { animRings(); skillsIO.unobserve(e[0].target); } }, { threshold: 0.3 });
     skillsIO.observe(document.getElementById('skills'));
+
+    /* ── PERSPECTIVE GRID FLOOR ── */
+    (function() {
+      const gc = document.getElementById('grid-floor');
+      if (!gc) return;
+      function drawGrid() {
+        gc.width = gc.parentElement.offsetWidth;
+        gc.height = gc.parentElement.offsetHeight * 0.4;
+        const ctx = gc.getContext('2d');
+        const W = gc.width, H = gc.height;
+        ctx.clearRect(0,0,W,H);
+        const vx = W/2, vy = 0;
+        const cols = 20, rows = 12;
+        ctx.strokeStyle = 'rgba(108,99,255,0.25)';
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i <= cols; i++) {
+          const x = (i / cols) * W;
+          ctx.beginPath(); ctx.moveTo(x, H); ctx.lineTo(vx, vy); ctx.stroke();
+        }
+        for (let j = 1; j <= rows; j++) {
+          const t = j / rows;
+          const y = H * t;
+          const xl = vx - (vx * t), xr = vx + (W - vx) * t;
+          ctx.globalAlpha = t * 0.6;
+          ctx.beginPath(); ctx.moveTo(xl, y * (H/H)); ctx.lineTo(xr, y * (H/H)); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      }
+      drawGrid();
+      window.addEventListener('resize', drawGrid);
+    })();
+
+    /* ── PARTICLE BURST ON CLICK ── */
+    document.addEventListener('click', e => {
+      const colors = ['#6c63ff','#00d4ff','#ff6b9d','#00ff88','#ffffff'];
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'burst-particle';
+        const angle = (i / 18) * Math.PI * 2;
+        const speed = Math.random() * 80 + 40;
+        const size = Math.random() * 5 + 3;
+        p.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;background:${colors[i%colors.length]};box-shadow:0 0 6px ${colors[i%colors.length]};`;
+        document.body.appendChild(p);
+        const tx = Math.cos(angle) * speed, ty = Math.sin(angle) * speed;
+        p.animate([
+          { transform:`translate(-50%,-50%) translate(0,0)`, opacity:1 },
+          { transform:`translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px))`, opacity:0 }
+        ], { duration: 600 + Math.random()*300, easing:'cubic-bezier(0,0.9,0.57,1)', fill:'forwards' })
+          .onfinish = () => p.remove();
+      }
+    });
+
+    /* ── TIMELINE LINE DRAW ── */
+    (function() {
+      const fill = document.getElementById('timeline-fill');
+      const timeline = fill && fill.parentElement;
+      if (!fill || !timeline) return;
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            fill.style.height = timeline.offsetHeight + 'px';
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      io.observe(timeline);
+    })();
+
+    /* ── NEON GLOW ON SECTION TITLES ── */
+    document.querySelectorAll('.section-title').forEach(el => {
+      const io2 = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { el.classList.add('neon'); io2.unobserve(el); }
+        });
+      }, { threshold: 0.8 });
+      io2.observe(el);
+    });
 
     /* ── SCROLL PROGRESS BAR ── */
     const prog = document.getElementById('scroll-progress');

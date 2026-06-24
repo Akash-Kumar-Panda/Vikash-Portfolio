@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vikash Panda — Technical Recruiter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #050810;
+      --bg2: #0a0f1e;
+      --bg3: #0f1629;
+      --accent: #6c63ff;
+      --accent2: #00d4ff;
+      --accent3: #ff6b9d;
+      --text: #e8eaf6;
+      --text2: #8892b0;
+      --card: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --glow: rgba(108,99,255,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ── CANVAS ── */
+    #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 6%;
+      background: rgba(5,8,16,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text2); text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px; background: var(--accent); transform: scaleX(0);
+      transition: transform 0.2s; border-radius: 1px;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 6rem 6% 4rem;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid rgba(108,99,255,0.4);
+      border-radius: 100px;
+      font-size: 0.78rem; font-weight: 500; color: var(--accent2);
+      margin-bottom: 1.5rem;
+      background: rgba(108,99,255,0.08);
+      animation: fadeDown 0.8s ease both;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent2);
+      animation: pulse 2s infinite;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -2px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-name .line1 { display: block; color: var(--text); }
+    .hero-name .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .hero-role {
+      margin-top: 1.2rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 400; color: var(--text2);
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .typed-text { color: var(--accent2); font-weight: 600; }
+    .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--accent2); margin-left: 2px; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+
+    .hero-desc {
+      max-width: 600px; margin: 1.5rem auto 0;
+      font-size: 1rem; color: var(--text2); line-height: 1.8;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .hero-cta {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .btn-primary {
+      padding: 0.85rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; text-decoration: none; border: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(108,99,255,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(108,99,255,0.5); }
+    .btn-secondary {
+      padding: 0.85rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600;
+      background: transparent; color: var(--text); text-decoration: none;
+      border: 1px solid var(--card-border); cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: var(--glow); }
+
+    .hero-stats {
+      display: flex; gap: 3rem; margin-top: 4rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 2.2rem; font-weight: 800; line-height: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text2); margin-top: 4px; font-weight: 500; }
+
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      animation: fadeIn 1s 1s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollDown 1.5s ease infinite;
+    }
+    .scroll-text { font-size: 0.7rem; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; padding: 6rem 6%; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800;
+      letter-spacing: -1px; color: var(--text); margin-bottom: 0.5rem;
+    }
+    .section-sub { font-size: 1rem; color: var(--text2); max-width: 500px; }
+
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-visual {
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .about-avatar {
+      width: 260px; height: 260px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem; font-weight: 900; color: #fff;
+      position: relative; z-index: 1;
+      box-shadow: 0 0 60px rgba(108,99,255,0.3);
+    }
+    .avatar-ring {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      border: 1px solid rgba(108,99,255,0.2);
+      animation: rotate 20s linear infinite;
+    }
+    .avatar-ring::before {
+      content: ''; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+    }
+    .avatar-ring2 {
+      position: absolute; width: 340px; height: 340px; border-radius: 50%;
+      border: 1px dashed rgba(0,212,255,0.15);
+      animation: rotate 30s linear infinite reverse;
+    }
+
+    .about-text h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+    .about-text p { font-size: 1rem; color: var(--text2); line-height: 1.9; margin-bottom: 1rem; }
+    .about-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
+    .chip {
+      padding: 5px 14px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 500;
+      border: 1px solid var(--card-border);
+      color: var(--text2); background: var(--card);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg3); }
+    .timeline { position: relative; max-width: 900px; margin: 0 auto; }
+    .timeline::before {
+      content: ''; position: absolute; left: 30px; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .timeline-item {
+      display: flex; gap: 2rem; margin-bottom: 2.5rem;
+      opacity: 0; transform: translateX(-30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: none; }
+
+    .timeline-dot {
+      flex-shrink: 0; width: 60px; height: 60px; border-radius: 50%;
+      background: var(--card); border: 1px solid var(--card-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; z-index: 1;
+      box-shadow: 0 0 20px var(--glow);
+    }
+    .timeline-card {
+      flex: 1; background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 1.5rem 2rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .timeline-card:hover {
+      border-color: rgba(108,99,255,0.3);
+      box-shadow: 0 0 40px rgba(108,99,255,0.08);
+    }
+    .tc-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .tc-role { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .tc-company { font-size: 0.9rem; color: var(--accent2); font-weight: 600; }
+    .tc-date {
+      font-size: 0.78rem; color: var(--text2); font-family: 'JetBrains Mono', monospace;
+      background: var(--card); padding: 3px 10px; border-radius: 100px;
+      border: 1px solid var(--card-border);
+    }
+    .tc-bullets { margin-top: 0.8rem; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .tc-bullets li { font-size: 0.9rem; color: var(--text2); display: flex; gap: 10px; line-height: 1.6; }
+    .tc-bullets li::before { content: '▹'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+    .tc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+    .tc-tag {
+      font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 100px;
+      background: rgba(108,99,255,0.1); color: var(--accent);
+      border: 1px solid rgba(108,99,255,0.2);
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg2); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 1.5rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
+    }
+    .skill-card.visible { opacity: 1; transform: none; }
+    .skill-card:hover { border-color: rgba(108,99,255,0.3); box-shadow: 0 0 30px rgba(108,99,255,0.06); }
+    .skill-card-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .skill-card-title { font-size: 0.85rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .skill-tag {
+      font-size: 0.8rem; font-weight: 500; padding: 5px 12px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--card-border);
+      color: var(--text2); transition: all 0.2s;
+    }
+    .skill-tag:hover { background: rgba(108,99,255,0.1); border-color: var(--accent); color: var(--text); }
+
+    /* ── EDUCATION ── */
+    #education { background: var(--bg3); }
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .edu-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 1.8rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .edu-card.visible { opacity: 1; transform: none; }
+    .edu-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .edu-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .edu-school { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .edu-degree { font-size: 0.85rem; color: var(--text2); margin-bottom: 0.8rem; line-height: 1.5; }
+    .edu-meta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .edu-year { font-size: 0.78rem; color: var(--text2); font-family: 'JetBrains Mono', monospace; }
+    .edu-score {
+      font-size: 0.85rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg2); }
+    .contact-wrapper {
+      max-width: 700px; margin: 0 auto; text-align: center;
+    }
+    .contact-tagline { font-size: 1.1rem; color: var(--text2); margin-bottom: 3rem; line-height: 1.8; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .contact-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 1.4rem 1rem;
+      text-decoration: none; transition: all 0.3s;
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    }
+    .contact-card:hover {
+      border-color: var(--accent); background: var(--glow);
+      transform: translateY(-3px);
+    }
+    .contact-card-icon { font-size: 1.6rem; }
+    .contact-card-label { font-size: 0.75rem; color: var(--text2); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .contact-card-value { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 2rem 6%;
+      border-top: 1px solid var(--card-border);
+      font-size: 0.82rem; color: var(--text2);
+    }
+    footer span { color: var(--accent); }
+
+    /* ── GLOW ORBS ── */
+    .orb {
+      position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+      filter: blur(80px); opacity: 0.12;
+    }
+    .orb1 { width: 500px; height: 500px; background: var(--accent); top: -150px; right: -150px; }
+    .orb2 { width: 400px; height: 400px; background: var(--accent2); bottom: 10%; left: -100px; }
+    .orb3 { width: 300px; height: 300px; background: var(--accent3); top: 40%; right: 20%; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes scrollDown { 0% { opacity: 0; transform: translateY(-10px); } 50% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { display: none; }
+      .timeline::before { left: 20px; }
+      .timeline-dot { width: 40px; height: 40px; font-size: 1rem; }
+      nav { padding: 1rem 4%; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 4%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <canvas id="particles"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">VP</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Open to Work — Technical Recruiter Roles
+    </div>
+
+    <h1 class="hero-name">
+      <span class="line1">Vikash Panda</span>
+      <span class="line2">Technical Recruiter</span>
+    </h1>
+
+    <p class="hero-role">
+      I am a <span class="typed-text" id="typed"></span><span class="cursor"></span>
+    </p>
+
+    <p class="hero-desc">
+      CSE graduate with marketplace coordination experience, 8 years of mentoring 100+ students,
+      and a passion for connecting talent with opportunity.
+    </p>
+
+    <div class="hero-cta">
+      <a href="resume.tex" class="btn-primary">Download Resume</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num" data-count="100">0</div>
+        <div class="stat-label">Students Mentored</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-count="95">0</div>
+        <div class="stat-label">% Success Rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-count="8">0</div>
+        <div class="stat-label">Years Teaching</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-count="3">0</div>
+        <div class="stat-label">Roles Held</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="avatar-ring2"></div>
+        <div class="avatar-ring"></div>
+        <div class="about-avatar">VP</div>
+      </div>
+      <div class="about-text">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">Who I Am</h2>
+        <p>
+          I'm a B.Tech Computer Science graduate from ABIT Cuttack with a unique blend of
+          <strong style="color:var(--text)">technical knowledge</strong> and
+          <strong style="color:var(--text)">people skills</strong> — a combination that makes
+          me a natural fit for Technical Recruiting.
+        </p>
+        <p>
+          I spent 3 months at SkillGigs as a Marketplace Coordinator, managing client-candidate
+          pipelines and training colleagues on HubSpot CRM, Google Workspace, and Microsoft Teams.
+          Before that, I spent 8 years shaping students' academic futures — an experience that
+          built deep skills in listening, mentoring, and driving results.
+        </p>
+        <div class="about-chips">
+          <span class="chip">📍 Cuttack, Odisha</span>
+          <span class="chip">🎓 B.Tech CSE — ABIT</span>
+          <span class="chip">🤝 Immediate Joiner</span>
+          <span class="chip">🌐 Remote-Ready</span>
+          <span class="chip">🗣️ Public Speaker</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header">
+      <div class="section-label">Career</div>
+      <h2 class="section-title">Experience</h2>
+      <p class="section-sub">A track record built on results, people, and impact.</p>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot">🎯</div>
+        <div class="timeline-card">
+          <div class="tc-header">
+            <div>
+              <div class="tc-role">Marketplace Coordinator</div>
+              <div class="tc-company">SkillGigs</div>
+            </div>
+            <div class="tc-date">Nov 2024 – Feb 2025</div>
+          </div>
+          <ul class="tc-bullets">
+            <li>Coordinated marketplace operations between clients and candidates, ensuring smooth onboarding and timely query resolution.</li>
+            <li>Rapidly adopted HubSpot CRM, Google Workspace, and Microsoft Teams — then proactively trained colleagues, improving team-wide productivity.</li>
+            <li>Demonstrated cross-functional leadership by bridging stakeholder gaps and aligning operational workflows.</li>
+          </ul>
+          <div class="tc-tags">
+            <span class="tc-tag">HubSpot CRM</span>
+            <span class="tc-tag">Google Workspace</span>
+            <span class="tc-tag">MS Teams</span>
+            <span class="tc-tag">Stakeholder Mgmt</span>
+            <span class="tc-tag">Onboarding</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">📚</div>
+        <div class="timeline-card">
+          <div class="tc-header">
+            <div>
+              <div class="tc-role">Private Academic Tutor</div>
+              <div class="tc-company">Self-Employed</div>
+            </div>
+            <div class="tc-date">Jun 2018 – Jun 2026</div>
+          </div>
+          <ul class="tc-bullets">
+            <li>Tutored 100+ students across ICSE and CBSE boards (Class VIII–X), with 95% scoring above 85% in Matriculation board exams.</li>
+            <li>Designed personalised learning plans targeting individual weak areas, producing consistent, measurable grade improvements.</li>
+            <li>Delivered concept-first teaching; several students progressed to top Science colleges.</li>
+            <li>Independently managed scheduling, parent communication, and progress tracking.</li>
+          </ul>
+          <div class="tc-tags">
+            <span class="tc-tag">ICSE / CBSE</span>
+            <span class="tc-tag">Mentorship</span>
+            <span class="tc-tag">Leadership</span>
+            <span class="tc-tag">100+ Students</span>
+            <span class="tc-tag">95% Success Rate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">💻</div>
+        <div class="timeline-card">
+          <div class="tc-header">
+            <div>
+              <div class="tc-role">Web Development Intern</div>
+              <div class="tc-company">Kaustubh Medtech</div>
+            </div>
+            <div class="tc-date">Jun 2023 – Jul 2023</div>
+          </div>
+          <ul class="tc-bullets">
+            <li>Built responsive frontend templates using HTML, CSS, and JavaScript, improving user experience and visual consistency.</li>
+            <li>Collaborated in an Agile team, iterating on UI/UX feedback and delivering modules on schedule.</li>
+          </ul>
+          <div class="tc-tags">
+            <span class="tc-tag">HTML5</span>
+            <span class="tc-tag">CSS3</span>
+            <span class="tc-tag">JavaScript</span>
+            <span class="tc-tag">Agile</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header">
+      <div class="section-label">Expertise</div>
+      <h2 class="section-title">Skills</h2>
+      <p class="section-sub">Tools and capabilities I bring to the table.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon">🎯</div>
+        <div class="skill-card-title">Recruiting & CRM</div>
+        <div class="skill-tags">
+          <span class="skill-tag">HubSpot CRM</span>
+          <span class="skill-tag">Candidate Sourcing</span>
+          <span class="skill-tag">Onboarding</span>
+          <span class="skill-tag">Stakeholder Mgmt</span>
+          <span class="skill-tag">ATS Concepts</span>
+          <span class="skill-tag">Talent Acquisition</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">🛠️</div>
+        <div class="skill-card-title">Productivity Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Google Workspace</span>
+          <span class="skill-tag">Microsoft Teams</span>
+          <span class="skill-tag">Git / GitHub</span>
+          <span class="skill-tag">VS Code</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">💻</div>
+        <div class="skill-card-title">Technical</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Data Analytics</span>
+          <span class="skill-tag">SQL (basic)</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">🗣️</div>
+        <div class="skill-card-title">Soft Skills</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Public Speaking</span>
+          <span class="skill-tag">Leadership</span>
+          <span class="skill-tag">Mentorship</span>
+          <span class="skill-tag">Communication</span>
+          <span class="skill-tag">Problem Solving</span>
+          <span class="skill-tag">Team Training</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-header">
+      <div class="section-label">Academic</div>
+      <h2 class="section-title">Education</h2>
+      <p class="section-sub">Strong academic foundation across engineering and sciences.</p>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon">🏛️</div>
+        <div class="edu-school">Ajay Binay Institute of Technology, Cuttack</div>
+        <div class="edu-degree">B.Tech — Computer Science & Engineering</div>
+        <div class="edu-meta">
+          <span class="edu-year">2021 – 2025</span>
+          <span class="edu-score">7.48 CGPA</span>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">📖</div>
+        <div class="edu-school">JKBK Government High School, Cuttack</div>
+        <div class="edu-degree">Class XII — Science</div>
+        <div class="edu-meta">
+          <span class="edu-year">2019 – 2021</span>
+          <span class="edu-score">88.67%</span>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">🎒</div>
+        <div class="edu-school">Stewart School, Cuttack</div>
+        <div class="edu-degree">Class X — ICSE Board</div>
+        <div class="edu-meta">
+          <span class="edu-year">2007 – 2018</span>
+          <span class="edu-score">87.83%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-wrapper">
+      <div class="section-label" style="text-align:center">Let's Connect</div>
+      <h2 class="section-title" style="text-align:center">Get In Touch</h2>
+      <p class="contact-tagline">
+        I'm actively looking for Technical Recruiter and Talent Acquisition roles.
+        If you have an opportunity or just want to connect — reach out!
+      </p>
+      <div class="contact-grid">
+        <a href="mailto:vpanda803@gmail.com" class="contact-card">
+          <div class="contact-card-icon">📧</div>
+          <div class="contact-card-label">Email</div>
+          <div class="contact-card-value">vpanda803@gmail.com</div>
+        </a>
+        <a href="mailto:vikash@thepanda.fyi" class="contact-card">
+          <div class="contact-card-icon">🌐</div>
+          <div class="contact-card-label">Professional</div>
+          <div class="contact-card-value">vikash@thepanda.fyi</div>
+        </a>
+        <a href="tel:+919937666626" class="contact-card">
+          <div class="contact-card-icon">📱</div>
+          <div class="contact-card-label">Phone</div>
+          <div class="contact-card-value">+91 99376 66626</div>
+        </a>
+        <a href="#" class="contact-card">
+          <div class="contact-card-icon">📍</div>
+          <div class="contact-card-label">Location</div>
+          <div class="contact-card-value">Cuttack, Odisha</div>
+        </a>
+      </div>
+      <a href="mailto:vpanda803@gmail.com" class="btn-primary" style="display:inline-block">
+        Say Hello 👋
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    Built with ❤️ for <span>Vikash Panda</span> · vikash.thepanda.fyi
+  </footer>
+
+  <script>
+    /* PARTICLES */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.5 + 0.3;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.alpha = Math.random() * 0.5 + 0.1;
+    }
+
+    for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(108,99,255,${p.alpha})`;
+        ctx.fill();
+      });
+      particles.forEach((a, i) => {
+        particles.slice(i + 1).forEach(b => {
+          const d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d < 100) {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(108,99,255,${0.06 * (1 - d / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    /* TYPING */
+    const roles = ['Technical Recruiter', 'Talent Acquisition Specialist', 'Marketplace Coordinator', 'CSE Graduate', 'People Person'];
+    let ri = 0, ci = 0, deleting = false;
+    const el = document.getElementById('typed');
+
+    function type() {
+      const word = roles[ri];
+      if (!deleting) {
+        el.textContent = word.slice(0, ++ci);
+        if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+      } else {
+        el.textContent = word.slice(0, --ci);
+        if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+      }
+      setTimeout(type, deleting ? 60 : 90);
+    }
+    setTimeout(type, 800);
+
+    /* COUNTER ANIMATION */
+    function animateCount(el) {
+      const target = +el.dataset.count;
+      const suffix = el.textContent.includes('%') ? '%' : (target === 100 ? '+' : (target === 8 ? '' : ''));
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.floor(current) + (target === 100 ? '+' : target === 95 ? '%' : '');
+        if (current >= target) clearInterval(timer);
+      }, 20);
+    }
+
+    /* INTERSECTION OBSERVER */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const counts = e.target.querySelectorAll('[data-count]');
+          counts.forEach(animateCount);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.timeline-item, .skill-card, .edu-card').forEach(el => io.observe(el));
+
+    const heroIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('[data-count]').forEach(animateCount);
+          heroIO.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    heroIO.observe(document.getElementById('hero'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape VIKASH PANDA} \\ \vspace{2pt}
+    {\large \textit{Software Developer $|$ Computer Science Engineer $|$ Web Developer}} \\ \vspace{3pt}
+    \small \raisebox{-0.1\height}\faPhone\ +91-9937666626 ~
+    \href{mailto:vpanda803@gmail.com}{\raisebox{-0.2\height}\faEnvelope\ \underline{vpanda803@gmail.com}} ~
+    \href{mailto:vikash@thepanda.fyi}{\raisebox{-0.2\height}\faEnvelope\ \underline{vikash@thepanda.fyi}} ~
+    \raisebox{-0.1\height}\faMapMarker\ Cuttack, Odisha, India
+\end{center}
+\vspace{-6pt}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    Computer Science Engineering graduate with strong foundations in \textbf{Data Structures and Algorithms (DSA), Data Analytics, and Data Science}. Proficient in \textbf{Java, C++, Python, HTML, CSS,} and PHP. Experienced in \textbf{frontend web development} and building responsive UI templates. Strong \textbf{communication and collaboration} skills with hands-on internship experience in a fast-paced product environment.
+  }}
+\end{itemize}
+\vspace{-14pt}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Ajay Binay Institute of Technology (ABIT), Cuttack}{September 2021 -- August 2025}
+      {Bachelor of Technology --- Computer Science and Engineering (B.Tech CSE)}{}
+
+    \resumeSubheading
+      {JKBK Government High School, Cuttack}{April 2019 -- May 2021}
+      {Higher Secondary (Class XII) --- Science}{88.67\%}
+
+    \resumeSubheading
+      {Stewart School, Cuttack}{March 2007 -- April 2018}
+      {Secondary (ICSE, Class X)}{87.83\%}
+
+  \resumeSubHeadingListEnd
+\vspace{-14pt}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Kaustubh Medtech}{June 2023 -- July 2023}
+      {\textbf{Web Development Intern}}{\textbf{Hyderabad, Telangana}}
+      \resumeItemListStart
+        \resumeItem{Designed and developed \textbf{responsive frontend templates} for the company's official website using \textbf{HTML, CSS, and JavaScript}, contributing directly to improved user experience and brand presentation.}
+        \resumeItem{Collaborated with the development team in an \textbf{Agile environment}, demonstrating adaptability, effective communication, and timely delivery of assigned modules.}
+        \resumeItem{Participated in \textbf{UI/UX design discussions} and implemented feedback iteratively, strengthening understanding of real-world \textbf{product development workflows}.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+\vspace{-14pt}
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \vspace{-5pt}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+        {\textbf{Portfolio Website} $|$ \emph{HTML, CSS, JavaScript}}{2024}
+        \resumeItemListStart
+          \resumeItem{Built a personal portfolio website to showcase projects, skills, and contact information with a \textbf{clean, responsive design} compatible across devices and browsers.}
+        \resumeItemListEnd
+
+      \resumeProjectHeading
+        {\textbf{Data Analysis Project} $|$ \emph{Python, Pandas, Matplotlib}}{2024}
+        \resumeItemListStart
+          \resumeItem{Performed \textbf{exploratory data analysis (EDA)} on a real-world dataset using Python libraries — cleaned, transformed, and visualized data to extract actionable insights.}
+        \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+\vspace{-14pt}
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Programming Languages}{: Java, C++, Python, JavaScript, PHP} \\
+     \textbf{Web Development}{: HTML5, CSS3, Responsive Design, Frontend Development, UI Templates} \\
+     \textbf{Data \& Analytics}{: Data Structures and Algorithms (DSA), Data Analytics, Data Science, Pandas, Matplotlib, Exploratory Data Analysis (EDA)} \\
+     \textbf{Tools \& Platforms}{: Git, GitHub, VS Code, Linux} \\
+     \textbf{Soft Skills}{: Public Speaking, Team Collaboration, Agile Methodology, Problem Solving, Communication} \\
+    }}
+ \end{itemize}
+\vspace{-14pt}
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements \& Activities}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Academic Excellence}{: Scored \textbf{87.83\%} in ICSE (Class X) and \textbf{88.67\%} in Class XII Science, demonstrating consistent academic performance.} \\
+     \textbf{Oratory}{: Proficient public speaker with strong English communication skills; participated in college-level debate and presentation events.} \\
+    }}
+ \end{itemize}
+
+\end{document}

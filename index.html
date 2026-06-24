@@ -190,7 +190,7 @@
       animation: none;
       opacity: 0;
     }
-    .glow-border:hover::before {
+    .glow-border.animating::before {
       animation: borderSpin 2s ease-out forwards;
     }
     @keyframes borderSpin {
@@ -1320,6 +1320,20 @@
         ], { duration: 600 + Math.random()*300, easing:'cubic-bezier(0,0.9,0.57,1)', fill:'forwards' })
           .onfinish = () => p.remove();
       }
+    });
+
+    /* ── BORDER ANIMATION: run once, ignore re-entry until complete ── */
+    document.querySelectorAll('.timeline-card.glow-border').forEach(card => {
+      let busy = false;
+      card.addEventListener('mouseenter', () => {
+        if (busy) return;
+        busy = true;
+        card.classList.add('animating');
+        setTimeout(() => {
+          card.classList.remove('animating');
+          busy = false;
+        }, 2000);
+      });
     });
 
     /* ── TIMELINE LINE DRAW ── */
